@@ -4,6 +4,7 @@
 import requests
 import sys
 
+
 def is_completed(task):
     """Checks if a task is completed."""
     return task["completed"] is True
