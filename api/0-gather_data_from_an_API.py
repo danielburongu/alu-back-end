@@ -1,23 +1,32 @@
 #!/usr/bin/python3
-"""my_module"""
+"""Module"""
+
 import requests
 import sys
 
+def is_completed(task):
+    """Checks if a task is completed."""
+    return task["completed"] is True
 
-#!/usr/bin/python3
-"""my_module"""
-import requests
-import sys
+if __name__ == '__main__':
+    employee_id = sys.argv[1]
+    user_url = "https://jsonplaceholder.typicode.com/users/{}" \
+        .format(employee_id)
+    todos_url = "https://jsonplaceholder.typicode.com/users/{}/todos/" \
+        .format(employee_id)
 
-if __name__ == "__main__":
-    url = "https://jsonplaceholder.typicode.com/todos"
-    user_id = sys.argv[1]
-    user = requests.get("https://jsonplaceholder.typicode.com/users/{}"
-                        .format(user_id)).json()
-    user_name = user.get("username")
-    todos = requests.get(url, params={"userId": user_id}).json()
-    with open("{}.csv".format(user_id), "w") as f:
-        for todo in todos:
-            f.write('"{}","{}","{}","{}"\n'.format(user_id, user_name,
-                                                   todo.get("completed"),
-                                                   todo.get("title")))
+    user_info = requests.request('GET', user_url).json()
+    todos_info = requests.request('GET', todos_url).json()
+
+    employee_name = user_info["name"]
+    employee_username = user_info["username"]
+    task_completed = list(filter(is_completed, todos_info))
+    number_of_done_tasks = len(task_completed)
+    total_number_of_tasks = len(todos_info)
+
+    with open(str(employee_id) + '.csv', "w") as file:
+        [file.write('"' + str(employee_id) + '",' +
+                    '"' + employee_username + '",' +
+                    '"' + str(task["completed"]) + '",' +
+                    '"' + task["title"] + '",' + "\n")
+         for task in todos_info]
