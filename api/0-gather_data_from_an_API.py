@@ -2,8 +2,6 @@
 """my_module"""
 import requests
 import sys
-"""my_module"""
-
 if __name__ == '__main__':
     if len(sys.argv) == 2 and sys.argv[1].isdigit():
         employee_id = int(sys.argv[1])
