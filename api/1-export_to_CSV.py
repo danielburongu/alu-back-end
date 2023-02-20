@@ -37,4 +37,4 @@ if __name__ == "__main__":
     with open('{}.csv'.format(argv[1]), mode='w') as file:
         file_editor = csv.writer(file, delimiter=',', quoting=csv.QUOTE_ALL)
         for D, B in tasks.items():
-            file_editor.writerow([argv[1], username, D, B])
+            file_editor.writerow([argv[1], username, B, D])
