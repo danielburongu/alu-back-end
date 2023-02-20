@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """
-    python script that returns TODO list progress for a given employee ID
+    This Python script retrieves a given employee's TODO list and returns the
+    progress, including the total number of tasks, the number of completed tasks,
+    and a list of completed tasks
+    To run this script, pass an employee ID as an argument:
 """
 import json
 import requests
@@ -9,40 +12,40 @@ from sys import argv
 
 if __name__ == "__main__":
     """
-        request user info by employee ID
+        Request employee information by ID
     """
     request_employee = requests.get(
         'https://jsonplaceholder.typicode.com/users/{}/'.format(argv[1]))
     """
-        convert json to dictionary
+        convert response JSON to dictionary
     """
     employee = json.loads(request_employee.text)
     """
-        extract employee name
+        Extract employee name from dictionary
     """
     employee_name = employee.get("name")
 
     """
-        request user's TODO list
+        Request employee's TODO list by ID
     """
     request_todos = requests.get(
         'https://jsonplaceholder.typicode.com/users/{}/todos'.format(argv[1]))
     """
-        dictionary to store task status in boolean format
+        Initialize dictionary to store task status
     """
     tasks = {}
     """
-        convert json to list of dictionaries
+        Convert response JSON to list of dictionaries
     """
     employee_todos = json.loads(request_todos.text)
     """
-        loop through dictionary & get completed tasks
+        Loop through dictionary and get completed tasks
     """
     for dictionary in employee_todos:
         tasks.update({dictionary.get("title"): dictionary.get("completed")})
 
     """
-        return name, total number of tasks & completed tasks
+        Print name, total number of tasks, and completed tasks
     """
     EMPLOYEE_NAME = employee_name
     TOTAL_NUMBER_OF_TASKS = len(tasks)
