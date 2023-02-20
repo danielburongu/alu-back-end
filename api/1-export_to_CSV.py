@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # Request user's TODO list
     request_todos = requests.get(
         'https://jsonplaceholder.typicode.com/users/{}/todos'.format(argv[1]))
-    
+
     # Dictionary to store task status (completed) in boolean format
     tasks = {}
 
