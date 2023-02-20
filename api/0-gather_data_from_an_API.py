@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """
     This Python script retrieves a given employee's TODO list and returns the
-    progress, including the total number of tasks, the number of completed tasks,
-    and a list of completed tasks, To run this script, pass an employee ID as an argument:
+    progress, including the total number of tasks,
+    To run this script, pass an employee ID as an argument.
 """
 import json
 import requests
