@@ -3,16 +3,27 @@
 import requests
 import sys
 
-if __name__ == "__main__":
-    url = "https://jsonplaceholder.typicode.com/todos"
-    user_id = sys.argv[1]
-    user = requests.get("https://jsonplaceholder.typicode.com/users/{}"
-                        .format(user_id)).json()
-    user_name = user.get("username")
-    todos = requests.get(url, params={"userId": user_id}).json()
-    with open("{}.csv".format(user_id), "w") as f:
-        for todo in todos:
-            f.write('"{}","{}","{}","{}"\n'.format(user_id, user_name,
-                                                   todo.get("completed"),
-                                                   todo.get("title")))
-    print("Done")
+if len(sys.argv) != 2:
+    print("Usage: python main.py [employee_id]")
+    sys.exit()
+
+employee_id = sys.argv[1]
+url = 'https://jsonplaceholder.typicode.com/todos?userId=' + employee_id
+
+response = requests.get(url)
+todos = response.json()
+
+if not todos:
+    print("User not found")
+    sys.exit()
+
+done_tasks = [todo for todo in todos if todo['completed']]
+total_tasks = len(todos)
+
+employee_name = todos[0]['userId']
+
+print("Employee Name: {}".format(employee_name))
+print("Employee {} is done with tasks({}/{}):".format(employee_name, len(done_tasks), total_tasks))
+
+for task in done_tasks:
+    print("\t {}".format(task['title']))
