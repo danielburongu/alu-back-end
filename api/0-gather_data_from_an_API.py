@@ -4,11 +4,6 @@
 import requests
 import sys
 
-
-def is_completed(task):
-    """Checks if a task is completed."""
-    return task["completed"] is True
-
 if __name__ == '__main__':
     employee_id = sys.argv[1]
     user_url = "https://jsonplaceholder.typicode.com/users/{}" \
@@ -21,7 +16,8 @@ if __name__ == '__main__':
 
     employee_name = user_info["name"]
     employee_username = user_info["username"]
-    task_completed = list(filter(is_completed, todos_info))
+    task_completed = list(filter(lambda obj:
+                                 (obj["completed"] is True), todos_info))
     number_of_done_tasks = len(task_completed)
     total_number_of_tasks = len(todos_info)
 
