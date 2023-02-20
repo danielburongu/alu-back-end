@@ -38,7 +38,7 @@ if __name__ == "__main__":
         })
 
     json_to_dump = {argv[1]: task_list}
-    
+
     # Export to JSON.
     with open('{}.json'.format(argv[1]), mode='w') as file:
         json.dump(json_to_dump, file)
